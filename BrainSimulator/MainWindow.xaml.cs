@@ -38,6 +38,7 @@ namespace BrainSimulator
         //Globals
         public static NeuronArrayView arrayView = null;
         public static NeuronArray theNeuronArray = null;
+        public static Cache<Color,SolidColorBrush> brushCache;
         //for cut-copy-paste
         public static NeuronArray myClipBoard = null; //refactor back to private
 
@@ -299,9 +300,9 @@ namespace BrainSimulator
             SolidColorBrush theColor = null;
             switch (severity)
             {
-                case 0: theColor = new SolidColorBrush(Colors.LightGreen); break;
-                case 1: theColor = new SolidColorBrush(Colors.Yellow); break;
-                case 2: theColor = new SolidColorBrush(Colors.Pink); break;
+                case 0: theColor = BrushCache.Instance.Get(Colors.LightGreen); break;
+                case 1: theColor = BrushCache.Instance.Get(Colors.Yellow); break;
+                case 2: theColor = BrushCache.Instance.Get(Colors.Pink); break;
             }
             tb.Background = theColor;
             tb.Text = message;

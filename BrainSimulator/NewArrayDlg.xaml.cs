@@ -288,9 +288,9 @@ namespace BrainSimulator
             if (sender is TextBox tb)
             {
                 if (!int.TryParse(tb.Text, out int value) || value <= 0)
-                    tb.Background = new SolidColorBrush(Colors.Pink);
+                    tb.Background = BrushCache.Instance.Get(Colors.Pink);
                 else
-                    tb.Background = new SolidColorBrush(Colors.LightGreen);
+                    tb.Background = BrushCache.Instance.Get(Colors.LightGreen);
             }
             if (int.TryParse(textBoxColumns.Text, out int cols) &&
                 int.TryParse(textBoxRows.Text, out int rows))
@@ -300,13 +300,13 @@ namespace BrainSimulator
                 if ((ulong)(rows * cols) > maxNeurons)
                 {
                     LabelNeuronCount.Content = "Neuron Count > Estimated Maximum!";
-                    textBoxColumns.Background = new SolidColorBrush(Colors.Red);
-                    textBoxRows.Background = new SolidColorBrush(Colors.Red);
+                    textBoxColumns.Background = BrushCache.Instance.Get(Colors.Red);
+                    textBoxRows.Background = BrushCache.Instance.Get(Colors.Red);
                 }
                 else
                 {
-                    textBoxColumns.Background = new SolidColorBrush(Colors.LightGreen);
-                    textBoxRows.Background = new SolidColorBrush(Colors.LightGreen);
+                    textBoxColumns.Background = BrushCache.Instance.Get(Colors.LightGreen);
+                    textBoxRows.Background = BrushCache.Instance.Get(Colors.LightGreen);
                 }
             }
             else

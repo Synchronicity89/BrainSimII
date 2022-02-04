@@ -47,7 +47,7 @@ namespace BrainSimulator
             if (!PtOnScreen(p1) && !PtOnScreen(p2)) return null;
 
             Shape l = GetSynapseShape(p1, p2, s.model);
-            l.Stroke = new SolidColorBrush(Utils.RainbowColorFromValue(s.weight));
+            l.Stroke = BrushCache.Instance.Get(Utils.RainbowColorFromValue(s.weight));
             if (l is Ellipse E)
             { }
             else
@@ -242,18 +242,18 @@ namespace BrainSimulator
                 if (int.TryParse(tb.Text, out int newID))
                 {
                     if (newID < 0 || newID >= MainWindow.theNeuronArray.arraySize)
-                        tb.Background = new SolidColorBrush(Colors.Pink);
+                        tb.Background = BrushCache.Instance.Get(Colors.Pink);
                     else
-                        tb.Background = new SolidColorBrush(Colors.LightGreen);
+                        tb.Background = BrushCache.Instance.Get(Colors.LightGreen);
                 }
                 else //is non-numeric
                 {
                     Neuron n = MainWindow.theNeuronArray.GetNeuron(tb.Text);
                     {
                         if (n == null)
-                            tb.Background = new SolidColorBrush(Colors.Pink);
+                            tb.Background = BrushCache.Instance.Get(Colors.Pink);
                         else
-                            tb.Background = new SolidColorBrush(Colors.LightGreen);
+                            tb.Background = BrushCache.Instance.Get(Colors.LightGreen);
                     }
                 }
             }

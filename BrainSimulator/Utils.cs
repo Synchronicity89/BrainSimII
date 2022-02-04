@@ -14,6 +14,7 @@ using static System.Math;
 using System.Windows.Input;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Concurrent;
 
 namespace BrainSimulator
 {
@@ -51,6 +52,78 @@ namespace BrainSimulator
             if (r2.maxX < minX - minOverlap) return false;
             if (r2.maxY < minY - minOverlap) return false;
             return true;
+        }
+    }
+
+    /// <summary>
+    /// Generic cache
+    /// </summary>
+    /// <typeparam name="TOut">a class instance that can be reused</typeparam>
+    /// <typeparam name="TIn">a struct that implements Equals</typeparam>
+    public class Cache<TIn,TOut>    where TIn   : struct 
+                                    where TOut  : class
+    {
+        protected ConcurrentDictionary<TIn, TOut> _cache = new ConcurrentDictionary<TIn, TOut>();
+        public TOut GetOrCreate(TIn input, Func<TIn, TOut> create)
+        {
+            if(_cache.ContainsKey(input))
+            {
+                return _cache[input];
+            }
+            else
+            {
+                TOut output = create(input);
+                _cache.GetOrAdd(input, output);
+                return output;
+            }
+        }
+    }
+
+    public class BrushCache : Cache<Color, SolidColorBrush>
+    {
+        Color[] colors;
+        public static BrushCache Instance = new BrushCache();
+        public BrushCache()
+        { 
+            colors = new Color[] {
+                Colors.Pink,
+                Colors.Yellow,
+                Colors.LightGreen,
+                Colors.Black,
+                Colors.White,
+                Colors.Orange,
+                Colors.AliceBlue,
+                Colors.LightSteelBlue,
+                Colors.LightGray,
+                Colors.Gray,
+                Colors.Blue,
+                Colors.Red,
+                Colors.LightBlue,
+                Colors.Wheat,
+                Colors.LightSalmon
+            };
+
+            foreach(var c in colors)
+            {
+                _cache.GetOrAdd(c, new SolidColorBrush(c));
+            }
+        }
+
+        /// <summary>
+        /// Slightly faster method, when you are confident the color is in the cache
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns>SolidColorBrush</returns>
+        public SolidColorBrush Get(Color color)
+        {
+            if (colors.Contains(color) == false && _cache.Keys.Contains(color) == false)
+            {
+                return GetOrCreate(color, (c) => new SolidColorBrush(c));
+            }
+            else
+            { 
+                return _cache[color];
+            }
         }
     }
 
@@ -151,6 +224,8 @@ namespace BrainSimulator
 
     public static class Utils
     {
+
+
         [DllImport("Kernel32.dll", CallingConvention = CallingConvention.Winapi)]
         public static extern void GetSystemTimePreciseAsFileTime(out long filetime);
         public static long GetPreciseTime()
@@ -673,31 +748,31 @@ namespace BrainSimulator
                 if (validation == "")
                 {
                     if (!float.TryParse(textbox.Text, out float x))
-                        parent.Background = new SolidColorBrush(Colors.Pink);
+                        parent.Background = BrushCache.Instance.Get(Colors.Pink);
                     else if (x > max || x < min)
-                        parent.Background = new SolidColorBrush(Colors.Yellow);
+                        parent.Background = BrushCache.Instance.Get(Colors.Yellow);
                     else
-                        parent.Background = new SolidColorBrush(Colors.LightGreen);
+                        parent.Background = BrushCache.Instance.Get(Colors.LightGreen);
                 }
                 else if (validation == "Int")
                 {
                     if (!int.TryParse(textbox.Text, out int x))
-                        parent.Background = new SolidColorBrush(Colors.Pink);
+                        parent.Background = BrushCache.Instance.Get(Colors.Pink);
                     else if (x > max || x < min)
-                        parent.Background = new SolidColorBrush(Colors.Yellow);
+                        parent.Background = BrushCache.Instance.Get(Colors.Yellow);
                     else
-                        parent.Background = new SolidColorBrush(Colors.LightGreen);
+                        parent.Background = BrushCache.Instance.Get(Colors.LightGreen);
                 }
                 else if (validation == "Hex")
                 {
                     try
                     {
                         uint newCharge = Convert.ToUInt32(textbox.Text, 16);
-                        parent.Background = new SolidColorBrush(Colors.LightGreen);
+                        parent.Background = BrushCache.Instance.Get(Colors.LightGreen);
                     }
                     catch
                     {
-                        parent.Background = new SolidColorBrush(Colors.Pink);
+                        parent.Background = BrushCache.Instance.Get(Colors.Pink);
                     }
                 }
             }

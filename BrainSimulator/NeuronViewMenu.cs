@@ -279,9 +279,9 @@ namespace BrainSimulator
                         if (col.R * 0.2126 + col.G * 0.7152 + col.B * 0.0722 < 255 / 2)
                         {
                             //dark color
-                            ((Label)cb0.Items[i]).Foreground = new SolidColorBrush(Utils.IntToColor(0xffffff));
+                            ((Label)cb0.Items[i]).Foreground = BrushCache.Instance.Get(Utils.IntToColor(0xffffff));
                         }
-                         ((Label)cb0.Items[i]).Background = new SolidColorBrush(Utils.IntToColor(colorValue));
+                         ((Label)cb0.Items[i]).Background = BrushCache.Instance.Get(Utils.IntToColor(colorValue));
                     }
                 }
                 cm.Items.Insert(insertPosition + 1, new MenuItem { Header = sp, StaysOpenOnClick = true });
@@ -402,7 +402,7 @@ namespace BrainSimulator
         private static void SynapseEntry_MouseEnter(object sender, MouseEventArgs e)
         {
             if (sender is TextBlock tb0)
-                tb0.Background = new SolidColorBrush(Colors.LightGreen);
+                tb0.Background = BrushCache.Instance.Get(Colors.LightGreen);
         }
 
         private static void B0_Click(object sender, RoutedEventArgs e)
@@ -706,7 +706,7 @@ namespace BrainSimulator
                 Neuron n = MainWindow.theNeuronArray.GetNeuron(neuronLabel);
                 if (n == null || neuronLabel == "")
                 {
-                    tb.Background = new SolidColorBrush(Colors.White);
+                    tb.Background = BrushCache.Instance.Get(Colors.White);
                     if (tb.Parent is StackPanel sp)
                     {
                         ((Label)sp.Children[2]).Visibility = Visibility.Hidden;
@@ -714,7 +714,7 @@ namespace BrainSimulator
                 }
                 else
                 {
-                    tb.Background = new SolidColorBrush(Colors.Pink);
+                    tb.Background = BrushCache.Instance.Get(Colors.Pink);
                     if (tb.Parent is StackPanel sp)
                     {
                         ((Label)sp.Children[2]).Visibility = Visibility.Visible;

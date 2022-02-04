@@ -163,7 +163,7 @@ namespace BrainSimulator.Modules
                 {
                     DataGridCellInfo dataGridCellInfo = new DataGridCellInfo(cell);
                     //theGrid.SelectedCells.Add(dataGridCellInfo);
-                    cell.Background = new SolidColorBrush(theBackgroundColor);
+                    cell.Background = BrushCache.Instance.Get(theBackgroundColor);
                 }
             }
         }
@@ -243,7 +243,7 @@ namespace BrainSimulator.Modules
         private void theGrid_MouseEnter(object sender, MouseEventArgs e)
         {
             mouseInWindow = true;
-            theGrid.Background = new SolidColorBrush(Colors.LightSteelBlue);
+            theGrid.Background = BrushCache.Instance.Get(Colors.LightSteelBlue);
             for (int i = 0; i < theGrid.Items.Count; i++)
                 for (int j = 1; j < theGrid.Columns.Count; j++)
                 {
@@ -258,7 +258,7 @@ namespace BrainSimulator.Modules
         private void theGrid_MouseLeave(object sender, MouseEventArgs e)
         {
             mouseInWindow = false;
-            theGrid.Background = new SolidColorBrush(Colors.LightGray);
+            theGrid.Background = BrushCache.Instance.Get(Colors.LightGray);
             for (int i = 0; i < theGrid.Items.Count; i++)
                 for (int j = 1; j < theGrid.Columns.Count; j++)
                 {

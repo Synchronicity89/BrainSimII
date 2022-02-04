@@ -82,7 +82,7 @@ namespace BrainSimulator.Modules
                         Y1 = parent.objects[i].P1.Y,
                         Y2 = parent.objects[i].P2.Y,
                         StrokeThickness = 4 / scale,
-                        Stroke = new SolidColorBrush(parent.objects[i].theColor),
+                        Stroke = BrushCache.Instance.Get(parent.objects[i].theColor),
                     });
                     //dash the line
                     PointPlus P1 = new PointPlus(parent.objects[i].P1);
@@ -101,7 +101,7 @@ namespace BrainSimulator.Modules
                             Y1 = PStart.Y,
                             Y2 = PEnd.Y,
                             StrokeThickness = 4 / scale,
-                            Stroke = new SolidColorBrush(Colors.AliceBlue),
+                            Stroke = BrushCache.Instance.Get(Colors.AliceBlue),
                         });
                     }
                 }
@@ -114,7 +114,7 @@ namespace BrainSimulator.Modules
                         Y1 = parent.objects[i].P1.Y,
                         Y2 = parent.objects[i].P2.Y,
                         StrokeThickness = 4 / scale,
-                        Stroke = new SolidColorBrush(parent.objects[i].theColor),
+                        Stroke = BrushCache.Instance.Get(parent.objects[i].theColor),
                     });
                 }
             }
@@ -183,7 +183,7 @@ namespace BrainSimulator.Modules
                             StrokeThickness = 3 / scale,
                             StrokeEndLineCap = PenLineCap.Round,
                             StrokeStartLineCap = PenLineCap.Round,
-                            Stroke = new SolidColorBrush(parent.currentView0[i].theColor)
+                            Stroke = BrushCache.Instance.Get(parent.currentView0[i].theColor)
                         });
                     }
                     catch { }
@@ -201,7 +201,7 @@ namespace BrainSimulator.Modules
                             StrokeThickness = 3 / scale,
                             StrokeEndLineCap = PenLineCap.Round,
                             StrokeStartLineCap = PenLineCap.Round,
-                            Stroke = new SolidColorBrush(parent.currentView1[i].theColor)
+                            Stroke = BrushCache.Instance.Get(parent.currentView1[i].theColor)
                         });
                     }
                     catch { }

@@ -76,7 +76,7 @@ namespace BrainSimulator.Modules
                             StrokeEndLineCap = PenLineCap.Round,
                             StrokeStartLineCap = PenLineCap.Round,
                             // Stroke = new SolidColorBrush(P1.TheColor)
-                            Stroke = new SolidColorBrush(Colors.Orange)
+                            Stroke = BrushCache.Instance.Get(Colors.Orange)
                         });
                     }
                 }
@@ -102,7 +102,7 @@ namespace BrainSimulator.Modules
                         Y1 = P1.Y,
                         Y2 = P2.Y,
                         StrokeThickness = 4 / scale,
-                        Stroke = new SolidColorBrush(theColor),
+                        Stroke = BrushCache.Instance.Get(theColor),
                     });
 
                     if (segment.P1.Conf != 0)
@@ -114,7 +114,7 @@ namespace BrainSimulator.Modules
                             Y1 = P1.Y,
                             Y2 = P1P.Y,
                             StrokeThickness = 4 / scale,
-                            Stroke = new SolidColorBrush(Colors.White),
+                            Stroke = BrushCache.Instance.Get(Colors.White),
                         });
                     }
                     if (segment.P2.Conf != 0)
@@ -126,7 +126,7 @@ namespace BrainSimulator.Modules
                             Y1 = P2.Y,
                             Y2 = P2P.Y,
                             StrokeThickness = 4 / scale,
-                            Stroke = new SolidColorBrush(Colors.White),
+                            Stroke = BrushCache.Instance.Get(Colors.White),
                         });
 
                     }
@@ -152,7 +152,7 @@ namespace BrainSimulator.Modules
                         Y1 = P1.Y,
                         Y2 = P2.Y,
                         StrokeThickness = 4 / scale,
-                        Stroke = new SolidColorBrush(theColor),
+                        Stroke = BrushCache.Instance.Get(theColor),
                         Opacity = .5
                     });
                 }

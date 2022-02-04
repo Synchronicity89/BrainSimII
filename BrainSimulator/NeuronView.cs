@@ -121,16 +121,16 @@ namespace BrainSimulator
             // figure out which color to use
             if (n.model == Neuron.modelType.Color)
             {
-                SolidColorBrush brush = new SolidColorBrush(Utils.IntToColor(n.LastChargeInt));
+                SolidColorBrush brush = BrushCache.Instance.Get(Utils.IntToColor(n.LastChargeInt));
                 return brush;
             }
             float value = n.LastCharge;
             Color c = Utils.RainbowColorFromValue(value);
-            SolidColorBrush s1 = new SolidColorBrush(c);
+            SolidColorBrush s1 = BrushCache.Instance.Get(c);
             if (!n.inUse && n.Model == Neuron.modelType.IF && n.Label =="")
                 s1.Opacity = .50;
             if ((n.leakRate < 0) || float.IsNegativeInfinity(1.0f / n.leakRate))
-                s1 = new SolidColorBrush(Colors.LightSalmon);
+                s1 = BrushCache.Instance.Get(Colors.LightSalmon);
             return s1;
         }
     }

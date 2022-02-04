@@ -114,13 +114,13 @@ namespace BrainSimulator.Modules
                         p.Y *= scale;
                         pts.Add(p);
                     }
-                    Polygon poly = new Polygon { Points = pts, Stroke = new SolidColorBrush(Colors.AliceBlue) };
+                    Polygon poly = new Polygon { Points = pts, Stroke = BrushCache.Instance.Get(Colors.AliceBlue)};
                     poly.ToolTip = area.Label;
                     poly.Fill = this.Background;
                     if (attnTarget == area)
                     {
-                        poly.Fill = new SolidColorBrush(fillColor);
-                        poly.Stroke = new SolidColorBrush(fillColor);
+                        poly.Fill = BrushCache.Instance.Get(fillColor);
+                        poly.Stroke = poly.Fill;
                         poly.Fill.Opacity = 1;
                     }
                     poly.MouseDown += Poly_MouseDown;
@@ -152,14 +152,14 @@ namespace BrainSimulator.Modules
 
         private void theCanvas_MouseEnter(object sender, MouseEventArgs e)
         {
-            theCanvas.Background = new SolidColorBrush(Colors.LightSteelBlue);
+            theCanvas.Background = BrushCache.Instance.Get(Colors.LightSteelBlue);
             ModuleAttention parent = (ModuleAttention)base.ParentModule;
             parent.SetEnable(false);
         }
 
         private void theCanvas_MouseLeave(object sender, MouseEventArgs e)
         {
-            theCanvas.Background = new SolidColorBrush(Colors.Gray);
+            theCanvas.Background = BrushCache.Instance.Get(Colors.Gray);
             ModuleAttention parent = (ModuleAttention)base.ParentModule;
             parent.SetEnable(true);
         }

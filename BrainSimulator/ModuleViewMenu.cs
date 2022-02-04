@@ -90,14 +90,14 @@ namespace BrainSimulator
             {
                 ComboBoxItem cbi = new ComboBoxItem()
                 {
-                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(s.Name)),
+                    Background = BrushCache.Instance.Get((Color)ColorConverter.ConvertFromString(s.Name)),
                     Content = s.Name
                 };
                 Rectangle r1 = new Rectangle()
                 {
                     Width = 20,
                     Height = 20,
-                    Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString(s.Name)),
+                    Fill = BrushCache.Instance.Get((Color)ColorConverter.ConvertFromString(s.Name)),
                     Margin = new Thickness(0, 0, 140, 0),
                 };
                 Grid g = new Grid();
@@ -166,17 +166,17 @@ namespace BrainSimulator
                                 ModuleView theModuleView = MainWindow.theNeuronArray.modules[i];
                                 MainWindow.theNeuronArray.GetNeuronLocation(MainWindow.theNeuronArray.modules[i].firstNeuron, out int col, out int row);
                                 if (!float.TryParse(tb.Text, out float width))
-                                    tb.Background = new SolidColorBrush(Colors.Pink);
+                                    tb.Background = BrushCache.Instance.Get(Colors.Pink);
                                 else
                                 {
                                     if (width < theModuleView.TheModule.MinWidth)
-                                        tb.Background = new SolidColorBrush(Colors.Pink);
+                                        tb.Background = BrushCache.Instance.Get(Colors.Pink);
                                     else
                                     {
                                         if (width + col > MainWindow.theNeuronArray.Cols)
-                                            tb.Background = new SolidColorBrush(Colors.Pink);
+                                            tb.Background = BrushCache.Instance.Get(Colors.Pink);
                                         else
-                                            tb.Background = new SolidColorBrush(Colors.LightGreen);
+                                            tb.Background = BrushCache.Instance.Get(Colors.LightGreen);
 
                                     }
                                 }
@@ -187,17 +187,17 @@ namespace BrainSimulator
                                 ModuleView theModuleView = MainWindow.theNeuronArray.modules[i];
                                 MainWindow.theNeuronArray.GetNeuronLocation(MainWindow.theNeuronArray.modules[i].firstNeuron, out int col, out int row);
                                 if (!float.TryParse(tb.Text, out float height))
-                                    tb.Background = new SolidColorBrush(Colors.Pink);
+                                    tb.Background = BrushCache.Instance.Get(Colors.Pink);
                                 else
                                 {
                                     if (height < theModuleView.TheModule.MinHeight)
-                                        tb.Background = new SolidColorBrush(Colors.Pink);
+                                        tb.Background = BrushCache.Instance.Get(Colors.Pink);
                                     else
                                     {
                                         if (height + row > MainWindow.theNeuronArray.rows)
-                                            tb.Background = new SolidColorBrush(Colors.Pink);
+                                            tb.Background = BrushCache.Instance.Get(Colors.Pink);
                                         else
-                                            tb.Background = new SolidColorBrush(Colors.LightGreen);
+                                            tb.Background = BrushCache.Instance.Get(Colors.LightGreen);
 
                                     }
                                 }
