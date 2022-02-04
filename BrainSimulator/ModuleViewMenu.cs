@@ -166,17 +166,17 @@ namespace BrainSimulator
                                 ModuleView theModuleView = MainWindow.theNeuronArray.modules[i];
                                 MainWindow.theNeuronArray.GetNeuronLocation(MainWindow.theNeuronArray.modules[i].firstNeuron, out int col, out int row);
                                 if (!float.TryParse(tb.Text, out float width))
-                                    tb.Background = new SolidColorBrush(Colors.Pink);
+                                    tb.Background = Utils.SolidPinkBrush;
                                 else
                                 {
                                     if (width < theModuleView.TheModule.MinWidth)
-                                        tb.Background = new SolidColorBrush(Colors.Pink);
+                                        tb.Background = Utils.SolidPinkBrush;
                                     else
                                     {
                                         if (width + col > MainWindow.theNeuronArray.Cols)
-                                            tb.Background = new SolidColorBrush(Colors.Pink);
+                                            tb.Background = Utils.SolidPinkBrush;
                                         else
-                                            tb.Background = new SolidColorBrush(Colors.LightGreen);
+                                            tb.Background = Utils.SolidLightGreenBrush;
 
                                     }
                                 }
@@ -187,17 +187,17 @@ namespace BrainSimulator
                                 ModuleView theModuleView = MainWindow.theNeuronArray.modules[i];
                                 MainWindow.theNeuronArray.GetNeuronLocation(MainWindow.theNeuronArray.modules[i].firstNeuron, out int col, out int row);
                                 if (!float.TryParse(tb.Text, out float height))
-                                    tb.Background = new SolidColorBrush(Colors.Pink);
+                                    tb.Background = Utils.SolidPinkBrush;
                                 else
                                 {
                                     if (height < theModuleView.TheModule.MinHeight)
-                                        tb.Background = new SolidColorBrush(Colors.Pink);
+                                        tb.Background = Utils.SolidPinkBrush;
                                     else
                                     {
                                         if (height + row > MainWindow.theNeuronArray.rows)
-                                            tb.Background = new SolidColorBrush(Colors.Pink);
+                                            tb.Background = Utils.SolidPinkBrush;
                                         else
-                                            tb.Background = new SolidColorBrush(Colors.LightGreen);
+                                            tb.Background = Utils.SolidLightGreenBrush;
 
                                     }
                                 }

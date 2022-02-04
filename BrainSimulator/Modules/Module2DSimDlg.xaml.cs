@@ -101,7 +101,7 @@ namespace BrainSimulator.Modules
                             Y1 = PStart.Y,
                             Y2 = PEnd.Y,
                             StrokeThickness = 4 / scale,
-                            Stroke = new SolidColorBrush(Colors.AliceBlue),
+                            Stroke = Utils.SolidAliceBlueBrush,
                         });
                     }
                 }

@@ -402,7 +402,7 @@ namespace BrainSimulator
         private static void SynapseEntry_MouseEnter(object sender, MouseEventArgs e)
         {
             if (sender is TextBlock tb0)
-                tb0.Background = new SolidColorBrush(Colors.LightGreen);
+                tb0.Background = Utils.SolidLightGreenBrush;
         }
 
         private static void B0_Click(object sender, RoutedEventArgs e)
@@ -706,7 +706,7 @@ namespace BrainSimulator
                 Neuron n = MainWindow.theNeuronArray.GetNeuron(neuronLabel);
                 if (n == null || neuronLabel == "")
                 {
-                    tb.Background = new SolidColorBrush(Colors.White);
+                    tb.Background = Utils.SolidWhiteBrush;
                     if (tb.Parent is StackPanel sp)
                     {
                         ((Label)sp.Children[2]).Visibility = Visibility.Hidden;
@@ -714,7 +714,7 @@ namespace BrainSimulator
                 }
                 else
                 {
-                    tb.Background = new SolidColorBrush(Colors.Pink);
+                    tb.Background = Utils.SolidPinkBrush;
                     if (tb.Parent is StackPanel sp)
                     {
                         ((Label)sp.Children[2]).Visibility = Visibility.Visible;

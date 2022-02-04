@@ -114,7 +114,7 @@ namespace BrainSimulator.Modules
                         p.Y *= scale;
                         pts.Add(p);
                     }
-                    Polygon poly = new Polygon { Points = pts, Stroke = new SolidColorBrush(Colors.AliceBlue) };
+                    Polygon poly = new Polygon { Points = pts, Stroke = Utils.SolidAliceBlueBrush };
                     poly.ToolTip = area.Label;
                     poly.Fill = this.Background;
                     if (attnTarget == area)
@@ -152,14 +152,14 @@ namespace BrainSimulator.Modules
 
         private void theCanvas_MouseEnter(object sender, MouseEventArgs e)
         {
-            theCanvas.Background = new SolidColorBrush(Colors.LightSteelBlue);
+            theCanvas.Background = Utils.SolidLightSteelBlueBrush;
             ModuleAttention parent = (ModuleAttention)base.ParentModule;
             parent.SetEnable(false);
         }
 
         private void theCanvas_MouseLeave(object sender, MouseEventArgs e)
         {
-            theCanvas.Background = new SolidColorBrush(Colors.Gray);
+            theCanvas.Background = Utils.SolidGrayBrush;
             ModuleAttention parent = (ModuleAttention)base.ParentModule;
             parent.SetEnable(true);
         }

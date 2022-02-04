@@ -255,8 +255,8 @@ namespace BrainSimulator
             //build the draggable selection rectangle
             dragRectangle = new Rectangle();
             dragRectangle.Width = dragRectangle.Height = dp.NeuronDisplaySize;
-            dragRectangle.Stroke = new SolidColorBrush(Colors.Red);
-            dragRectangle.Fill = new SolidColorBrush(Colors.Red);
+            dragRectangle.Stroke = Utils.SolidRedBrush;
+            dragRectangle.Fill = Utils.SolidRedBrush;
             dragRectangle.Fill.Opacity = 0.5;
             Canvas.SetLeft(dragRectangle, currentPosition.X);
             Canvas.SetTop(dragRectangle, currentPosition.Y);
@@ -344,14 +344,14 @@ namespace BrainSimulator
             labelCursor = new Label
             {
                 Content = moduleLabel,
-                Background = new SolidColorBrush(Colors.White),
+                Background = Utils.SolidWhiteBrush,
             };
 
             Type t = Type.GetType("BrainSimulator.Modules.Module" + moduleLabel);
             Modules.ModuleBase theModule = (Modules.ModuleBase)Activator.CreateInstance(t);
             rectCursor = new Rectangle
             {
-                Fill = new SolidColorBrush(Colors.Wheat),
+                Fill = Utils.SolidWheatBrush,
                 Opacity = 0.3,
                 Width = theModule.MinWidth * MainWindow.arrayView.dp.NeuronDisplaySize,
                 Height = theModule.MinHeight * MainWindow.arrayView.dp.NeuronDisplaySize,

@@ -138,7 +138,7 @@ namespace BrainSimulator
                     X2 = dp.DisplayOffset.X + columns * dp.NeuronDisplaySize,
                     Y1 = dp.DisplayOffset.Y + i * dp.NeuronDisplaySize,
                     Y2 = dp.DisplayOffset.Y + i * dp.NeuronDisplaySize,
-                    Stroke = new SolidColorBrush(Colors.Red),
+                    Stroke = Utils.SolidRedBrush,
                 };
                 legendCanvas.Children.Add(l);
             }
@@ -150,7 +150,7 @@ namespace BrainSimulator
                     X2 = dp.DisplayOffset.X + j * dp.NeuronDisplaySize,
                     Y1 = dp.DisplayOffset.Y + 0,
                     Y2 = dp.DisplayOffset.Y + theNeuronArray.rows * dp.NeuronDisplaySize,
-                    Stroke = new SolidColorBrush(Colors.Red),
+                    Stroke = Utils.SolidRedBrush,
                 };
                 legendCanvas.Children.Add(l);
             }
@@ -196,9 +196,9 @@ namespace BrainSimulator
                     //Label moduleLabel = new Label();
                     TextBlock moduleLabel = new();
                     moduleLabel.Text = nr.Label;
-                    moduleLabel.Background = new SolidColorBrush(Colors.White);
+                    moduleLabel.Background = Utils.SolidWhiteBrush;
                     if (!nr.TheModule.isEnabled)
-                        moduleLabel.Background = new SolidColorBrush(Colors.LightGray);
+                        moduleLabel.Background = Utils.SolidLightGrayBrush;
                     moduleLabel.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
                     Canvas.SetLeft(moduleLabel, Canvas.GetLeft(r));
                     Canvas.SetTop(moduleLabel, Canvas.GetTop(r)-moduleLabel.DesiredSize.Height);
@@ -211,7 +211,7 @@ namespace BrainSimulator
             for (int i = 0; i < theSelection.selectedRectangles.Count; i++)
             {
                 Rectangle r = theSelection.selectedRectangles[i].GetRectangle(dp);
-                r.Fill = new SolidColorBrush(Colors.Pink);
+                r.Fill = Utils.SolidPinkBrush;
                 r.SetValue(ModuleView.AreaNumberProperty, i);
                 r.SetValue(ShapeType, shapeType.Selection);
 
@@ -310,7 +310,7 @@ namespace BrainSimulator
                                 if (lbl != null && dp.ShowNeuronLabels())
                                 {
                                     if (l is Shape s && s.Fill is SolidColorBrush b && b.Color == Colors.White)
-                                        lbl.Foreground = new SolidColorBrush(Colors.Black);
+                                        lbl.Foreground = Utils.SolidBlackBrush;
                                     lbl.SetValue(ShapeType, shapeType.Neuron);
                                     labelCanvas.Children.Add(lbl);
                                 }
@@ -522,9 +522,9 @@ namespace BrainSimulator
                         if (newColor != null && a.label != null)
                         {
                             if (newColor.Color == Colors.White)
-                                a.label.Foreground = new SolidColorBrush(Colors.Black);
+                                a.label.Foreground = Utils.SolidBlackBrush;
                             else
-                                a.label.Foreground = new SolidColorBrush(Colors.White);
+                                a.label.Foreground = Utils.SolidWhiteBrush;
                         }
                     }
                 }
@@ -595,7 +595,7 @@ namespace BrainSimulator
                 r.Width = r.Height = dp.NeuronDisplaySize;
                 Canvas.SetTop(r, p1.Y);
                 Canvas.SetLeft(r, p1.X);
-                r.Fill = new SolidColorBrush(Colors.LightBlue);
+                r.Fill = Utils.SolidLightBlueBrush;
                 targetNeuronCanvas.Children.Clear();
                 targetNeuronCanvas.Children.Add(r);
             }

@@ -151,6 +151,22 @@ namespace BrainSimulator
 
     public static class Utils
     {
+        internal static readonly SolidColorBrush SolidPinkBrush = new SolidColorBrush(Colors.Pink);
+        internal static readonly SolidColorBrush SolidYellowBrush = new SolidColorBrush(Colors.Yellow);
+        internal static readonly SolidColorBrush SolidLightGreenBrush = new SolidColorBrush(Colors.LightGreen);
+        internal static readonly SolidColorBrush SolidBlackBrush = new SolidColorBrush(Colors.Black);
+        internal static readonly SolidColorBrush SolidWhiteBrush = new SolidColorBrush(Colors.White);
+        internal static readonly SolidColorBrush SolidOrangeBrush = new SolidColorBrush(Colors.Orange);
+        internal static readonly SolidColorBrush SolidAliceBlueBrush = new SolidColorBrush(Colors.AliceBlue);
+        internal static readonly SolidColorBrush SolidLightSteelBlueBrush = new SolidColorBrush(Colors.LightSteelBlue);
+        internal static readonly SolidColorBrush SolidLightGrayBrush = new SolidColorBrush(Colors.LightGray);
+        internal static readonly SolidColorBrush SolidGrayBrush = new SolidColorBrush(Colors.Gray);
+        internal static readonly SolidColorBrush SolidBlueBrush = new SolidColorBrush(Colors.Blue);
+        internal static readonly SolidColorBrush SolidRedBrush = new SolidColorBrush(Colors.Red);
+        internal static readonly SolidColorBrush SolidLightBlueBrush = new SolidColorBrush(Colors.LightBlue);
+        internal static readonly SolidColorBrush SolidWheatBrush = new SolidColorBrush(Colors.Wheat);
+        internal static readonly SolidColorBrush SolidLightSalmonBrush = new SolidColorBrush(Colors.LightSalmon);
+
         [DllImport("Kernel32.dll", CallingConvention = CallingConvention.Winapi)]
         public static extern void GetSystemTimePreciseAsFileTime(out long filetime);
         public static long GetPreciseTime()
@@ -673,31 +689,31 @@ namespace BrainSimulator
                 if (validation == "")
                 {
                     if (!float.TryParse(textbox.Text, out float x))
-                        parent.Background = new SolidColorBrush(Colors.Pink);
+                        parent.Background = SolidPinkBrush;
                     else if (x > max || x < min)
-                        parent.Background = new SolidColorBrush(Colors.Yellow);
+                        parent.Background = SolidYellowBrush;
                     else
-                        parent.Background = new SolidColorBrush(Colors.LightGreen);
+                        parent.Background = SolidLightGreenBrush;
                 }
                 else if (validation == "Int")
                 {
                     if (!int.TryParse(textbox.Text, out int x))
-                        parent.Background = new SolidColorBrush(Colors.Pink);
+                        parent.Background = SolidPinkBrush;
                     else if (x > max || x < min)
-                        parent.Background = new SolidColorBrush(Colors.Yellow);
+                        parent.Background = SolidYellowBrush;
                     else
-                        parent.Background = new SolidColorBrush(Colors.LightGreen);
+                        parent.Background = SolidLightGreenBrush;
                 }
                 else if (validation == "Hex")
                 {
                     try
                     {
                         uint newCharge = Convert.ToUInt32(textbox.Text, 16);
-                        parent.Background = new SolidColorBrush(Colors.LightGreen);
+                        parent.Background = SolidLightGreenBrush;
                     }
                     catch
                     {
-                        parent.Background = new SolidColorBrush(Colors.Pink);
+                        parent.Background = SolidPinkBrush;
                     }
                 }
             }

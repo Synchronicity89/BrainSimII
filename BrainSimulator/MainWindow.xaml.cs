@@ -299,9 +299,9 @@ namespace BrainSimulator
             SolidColorBrush theColor = null;
             switch (severity)
             {
-                case 0: theColor = new SolidColorBrush(Colors.LightGreen); break;
-                case 1: theColor = new SolidColorBrush(Colors.Yellow); break;
-                case 2: theColor = new SolidColorBrush(Colors.Pink); break;
+                case 0: theColor = Utils.SolidLightGreenBrush; break;
+                case 1: theColor = Utils.SolidYellowBrush; break;
+                case 2: theColor = Utils.SolidPinkBrush; break;
             }
             tb.Background = theColor;
             tb.Text = message;

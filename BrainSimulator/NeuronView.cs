@@ -130,7 +130,7 @@ namespace BrainSimulator
             if (!n.inUse && n.Model == Neuron.modelType.IF && n.Label =="")
                 s1.Opacity = .50;
             if ((n.leakRate < 0) || float.IsNegativeInfinity(1.0f / n.leakRate))
-                s1 = new SolidColorBrush(Colors.LightSalmon);
+                s1 = Utils.SolidLightSalmonBrush;
             return s1;
         }
     }

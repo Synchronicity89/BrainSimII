@@ -80,7 +80,7 @@ namespace BrainSimulator
 
                     Polyline pl = new Polyline()
                     {
-                        Stroke = new SolidColorBrush(Colors.Black),
+                        Stroke = Utils.SolidBlackBrush,
                         StrokeThickness = 4,
                         StrokeEndLineCap = PenLineCap.Round,
                         StrokeLineJoin = PenLineJoin.Round,
@@ -153,7 +153,7 @@ namespace BrainSimulator
                     Label l = new Label
                     {
                         Content = label,
-                        Foreground = new SolidColorBrush(Colors.White),
+                        Foreground = Utils.SolidWhiteBrush,
                         FontSize = yDelta / 3                    };
                     l.MouseMove += L_MouseMove;
                     l.MouseLeftButtonUp += L_MouseLeftButtonUp;

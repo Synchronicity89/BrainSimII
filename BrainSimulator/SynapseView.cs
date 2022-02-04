@@ -242,18 +242,18 @@ namespace BrainSimulator
                 if (int.TryParse(tb.Text, out int newID))
                 {
                     if (newID < 0 || newID >= MainWindow.theNeuronArray.arraySize)
-                        tb.Background = new SolidColorBrush(Colors.Pink);
+                        tb.Background = Utils.SolidPinkBrush;
                     else
-                        tb.Background = new SolidColorBrush(Colors.LightGreen);
+                        tb.Background = Utils.SolidLightGreenBrush;
                 }
                 else //is non-numeric
                 {
                     Neuron n = MainWindow.theNeuronArray.GetNeuron(tb.Text);
                     {
                         if (n == null)
-                            tb.Background = new SolidColorBrush(Colors.Pink);
+                            tb.Background = Utils.SolidPinkBrush;
                         else
-                            tb.Background = new SolidColorBrush(Colors.LightGreen);
+                            tb.Background = Utils.SolidLightGreenBrush;
                     }
                 }
             }

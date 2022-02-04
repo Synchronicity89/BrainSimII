@@ -87,7 +87,7 @@ namespace BrainSimulator.Modules
                         StrokeEndLineCap = PenLineCap.Round,
                         StrokeStartLineCap = PenLineCap.Round,
                         // Stroke = new SolidColorBrush(P1.TheColor)
-                        Stroke = new SolidColorBrush(Colors.Pink)
+                        Stroke = Utils.SolidPinkBrush
                     });
                 }
                 foreach (ModuleBoundarySegments.Arc t in parent.segments)
@@ -102,7 +102,7 @@ namespace BrainSimulator.Modules
                         StrokeEndLineCap = PenLineCap.Round,
                         StrokeStartLineCap = PenLineCap.Round,
                         // Stroke = new SolidColorBrush(P1.TheColor)
-                        Stroke = new SolidColorBrush(Colors.Blue)
+                        Stroke = Utils.SolidBlueBrush
                     });
                 }
             }

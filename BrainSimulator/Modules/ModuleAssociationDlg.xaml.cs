@@ -243,7 +243,7 @@ namespace BrainSimulator.Modules
         private void theGrid_MouseEnter(object sender, MouseEventArgs e)
         {
             mouseInWindow = true;
-            theGrid.Background = new SolidColorBrush(Colors.LightSteelBlue);
+            theGrid.Background = Utils.SolidLightSteelBlueBrush;
             for (int i = 0; i < theGrid.Items.Count; i++)
                 for (int j = 1; j < theGrid.Columns.Count; j++)
                 {
@@ -258,7 +258,7 @@ namespace BrainSimulator.Modules
         private void theGrid_MouseLeave(object sender, MouseEventArgs e)
         {
             mouseInWindow = false;
-            theGrid.Background = new SolidColorBrush(Colors.LightGray);
+            theGrid.Background = Utils.SolidLightGrayBrush;
             for (int i = 0; i < theGrid.Items.Count; i++)
                 for (int j = 1; j < theGrid.Columns.Count; j++)
                 {

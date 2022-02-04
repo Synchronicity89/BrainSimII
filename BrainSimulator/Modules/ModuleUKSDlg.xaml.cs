@@ -201,7 +201,7 @@ namespace BrainSimulator.Modules
                 }
                 TreeViewItem tviChild = new TreeViewItem { Header = header };
                 if (child.lastFired == MainWindow.theNeuronArray.Generation)
-                    tviChild.Background = new SolidColorBrush(Colors.LightGreen);
+                    tviChild.Background = Utils.SolidLightGreenBrush;
 
                 if (expandedItems.Contains("|" + parentLabel + "|" + LeftOfColon(header)))
                     tviChild.IsExpanded = true;
@@ -373,13 +373,13 @@ namespace BrainSimulator.Modules
         private void theTreeView_MouseEnter(object sender, MouseEventArgs e)
         {
             mouseInTree = true;
-            theTreeView.Background = new SolidColorBrush(Colors.LightSteelBlue);
+            theTreeView.Background = Utils.SolidLightSteelBlueBrush;
         }
 
         private void theTreeView_MouseLeave(object sender, MouseEventArgs e)
         {
             mouseInTree = false;
-            theTreeView.Background = new SolidColorBrush(Colors.LightGray);
+            theTreeView.Background = Utils.SolidLightGrayBrush;
         }
     }
 }
