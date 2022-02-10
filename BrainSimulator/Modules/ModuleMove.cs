@@ -51,7 +51,7 @@ namespace BrainSimulator.Modules
                 moved = m2D.Move(motionX, motionY);
 
             Module2DModel m2DModel = (Module2DModel)FindModleu(typeof(Module2DModel));
-            if (m2DModel != null && moved && motionX != 0 || motionY != 0)
+            if (m2DModel != null && moved && (motionX != 0 || motionY != 0))
                 m2DModel.Move(motionX, motionY);
 
             Module2DVision m2DVision = (Module2DVision)FindModleu(typeof(Module2DVision));
