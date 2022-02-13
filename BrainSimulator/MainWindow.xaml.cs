@@ -38,7 +38,6 @@ namespace BrainSimulator
         //Globals
         public static NeuronArrayView arrayView = null;
         public static NeuronArray theNeuronArray = null;
-        public static Cache<Color,SolidColorBrush> brushCache;
         //for cut-copy-paste
         public static NeuronArray myClipBoard = null; //refactor back to private
 
