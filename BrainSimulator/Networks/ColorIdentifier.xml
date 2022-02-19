@@ -2857,7 +2857,7 @@
     <Neuron>
       <Id>221</Id>
       <LeakRate>0</LeakRate>
-      <Label>#1 Recotnizes colors stored in the PatternRecognizer module</Label>
+      <Label>#1 Recognizes colors stored in the PatternRecognizer module</Label>
     </Neuron>
     <Neuron>
       <Id>267</Id>

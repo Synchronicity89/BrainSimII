@@ -498,7 +498,7 @@ namespace BrainSimulator
                             a.prevValue = x;
 
                             newColor = NeuronView.GetNeuronColor(n);
-                            e.Fill = newColor;
+                            e.Fill = newColor.IfFrozenGetClone();
                             if (n.lastCharge != 0 && e.Fill.Opacity != 1)
                                 e.Fill.Opacity = 1;
                         }
@@ -509,13 +509,19 @@ namespace BrainSimulator
                         {
                             a.label.Text = newLabel;
                             if (e.Fill.Opacity != 1)
+                            {
+                                e.Fill = ((SolidColorBrush)e.Fill).IfFrozenGetClone();
                                 e.Fill.Opacity = 1;
+                            }
                         }
                         if (a.label == null && newLabel != "")
                         {
                             UIElement l = NeuronView.GetNeuronView(n, this, out TextBlock lbl);
                             if (e.Fill.Opacity != 1)
+                            {
+                                e.Fill = ((SolidColorBrush)e.Fill).IfFrozenGetClone();
                                 e.Fill.Opacity = 1;
+                            }
                             a.label = lbl;
                             theCanvas.Children.Add(lbl);
                         }

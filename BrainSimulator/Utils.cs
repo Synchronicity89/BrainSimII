@@ -55,13 +55,29 @@ namespace BrainSimulator
         }
     }
 
+    public static class SolidColorBrushExtensions
+    {
+        public static SolidColorBrush IfFrozenGetClone(this SolidColorBrush thisBrush)
+        {
+            if(thisBrush.IsFrozen == true)
+            {
+                var clone = thisBrush.Clone();
+                return clone;
+            }
+            else
+            {
+                return thisBrush;
+            }
+        }
+    }
+
     /// <summary>
     /// Generic cache
     /// </summary>
     /// <typeparam name="TOut">a class instance that can be reused</typeparam>
-    /// <typeparam name="TIn">a struct that implements Equals</typeparam>
-    public class Cache<TIn,TOut>    where TIn   : struct 
-                                    where TOut  : class
+    /// <typeparam name="TIn">a struct (e.g. primitive type) that implements Equals</typeparam>
+    public class FreezableCache<TIn,TOut>    where TIn   : struct 
+                                          where TOut  : Freezable, new()
     {
         protected ConcurrentDictionary<TIn, TOut> _cache = new ConcurrentDictionary<TIn, TOut>();
         public TOut GetOrCreate(TIn input, Func<TIn, TOut> create)
@@ -73,16 +89,22 @@ namespace BrainSimulator
             else
             {
                 TOut output = create(input);
+                if(output.CanFreeze)
+                {
+                    output.Freeze();
+                }
                 _cache.GetOrAdd(input, output);
                 return output;
             }
         }
     }
-
-    public class BrushCache : Cache<Color, SolidColorBrush>
+    /// <summary>
+    /// A cache of SolidColorBrush. It freezes brushes to speed up graphics performance, plus caches instances.
+    /// </summary>
+    public class BrushCache : FreezableCache<Color, SolidColorBrush>
     {
         Color[] colors;
-        public static BrushCache Instance = new BrushCache();
+        public static BrushCache Instance = new();
         public BrushCache()
         { 
             colors = new Color[] {
@@ -105,20 +127,29 @@ namespace BrainSimulator
 
             foreach(var c in colors)
             {
-                _cache.GetOrAdd(c, new SolidColorBrush(c));
+                SolidColorBrush newBrush = new(c);
+                if(newBrush.CanFreeze == true)
+                { 
+                    newBrush.Freeze();
+                }
+                _cache.GetOrAdd(c, newBrush);
             }
         }
 
         /// <summary>
-        /// Slightly faster method, when you are confident the color is in the cache
+        /// Fetch known colors without having to call ContainsKey
         /// </summary>
         /// <param name="color"></param>
         /// <returns>SolidColorBrush</returns>
         public SolidColorBrush Get(Color color)
         {
-            if (colors.Contains(color) == false && _cache.Keys.Contains(color) == false)
+            if (colors.Contains(color) == false && _cache.ContainsKey(color) == false)
             {
-                return GetOrCreate(color, (c) => new SolidColorBrush(c));
+                return GetOrCreate(color, (c) =>
+                {
+                    SolidColorBrush newBrush = new(c);
+                    return newBrush;
+                });
             }
             else
             { 

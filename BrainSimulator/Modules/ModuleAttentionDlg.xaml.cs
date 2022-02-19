@@ -119,8 +119,8 @@ namespace BrainSimulator.Modules
                     poly.Fill = this.Background;
                     if (attnTarget == area)
                     {
-                        poly.Fill = BrushCache.Instance.Get(fillColor);
-                        poly.Stroke = poly.Fill;
+                        poly.Fill = new SolidColorBrush(fillColor);
+                        poly.Stroke = new SolidColorBrush(fillColor);
                         poly.Fill.Opacity = 1;
                     }
                     poly.MouseDown += Poly_MouseDown;
