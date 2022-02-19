@@ -271,3 +271,6 @@ AutomatedTests/output.xml
 AutomatedTests/*.png
 /Installer/LatestBrainSimVersion.txt
 /BrainSimulator.backup
+/CSEngineTest/CSEngineTest_nn3wno5d_wpftmp.csproj
+/BrainSimulator/Resources/Icons
+/BrainSimulator/Properties
