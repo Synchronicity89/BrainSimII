@@ -274,3 +274,6 @@ AutomatedTests/*.png
 /CSEngineTest/CSEngineTest_nn3wno5d_wpftmp.csproj
 /BrainSimulator/Resources/Icons
 /BrainSimulator/Properties
+/test_data_set_0
+/test_data_set_1
+/test_data_set_2
