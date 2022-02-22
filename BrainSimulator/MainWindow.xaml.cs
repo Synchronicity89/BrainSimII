@@ -497,7 +497,7 @@ namespace BrainSimulator
             }
         }
 
-        public static List<int> displayTimerMovingAverage;
+        static List<int> displayTimerMovingAverage;
         public static void UpdateDisplayLabel(float zoomLevel)
         {
             if (displayTimerMovingAverage == null)
@@ -518,7 +518,7 @@ namespace BrainSimulator
             thisWindow.SetStatus(2, displayStatus, 0);
         }
 
-        public static bool fullUpdateNeeded = false;
+        static bool fullUpdateNeeded = false;
         public static void Update()
         {
             if (thisWindow.IsEngineSuspended())

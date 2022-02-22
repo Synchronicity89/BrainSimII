@@ -22,45 +22,6 @@ namespace BrainSimulator
     /// </summary>
     public partial class MainWindow : Window
     {
-        //dynamic GetMNistPretrained(NDarray matrix)
-        //{
-        //    //List<NDarray> matrix = new List<NDarray>();
-        //    //matrix.Add(np.array(MNist.a1));
-        //    //matrix.Add(np.array(MNist.a2));
-        //    //matrix.Add(np.array(MNist.a3));
-        //    //matrix.Add(np.array(MNist.a4));
-        //    //matrix.Add(np.array(MNist.a5));
-        //    //matrix.Add(np.array(MNist.a6));
-        //    //matrix.Add(np.array(MNist.a7));
-
-        //    var w0 = ((NDarray)matrix[0]).transpose().astype(np.int32);
-        //    var w1 = ((NDarray)matrix[2]).transpose().astype(np.int32);
-        //    var w2 = ((NDarray)matrix[4]).transpose().astype(np.int32);
-        //    var b1 = ((NDarray)matrix[1]).astype(np.int32);
-        //    var b2 = ((NDarray)matrix[3]).astype(np.int32);
-        //    var b3 = ((NDarray)matrix[5]).astype(np.int32);
-        //    dynamic self = new System.Dynamic.ExpandoObject();
-
-        //    self.spikes_in = new InPort(shape: new Shape(w0.shape[1]));//(w0.shape[1], )
-        //    self.spikes_out = new OutPort(shape: new Shape(w2.shape[0]));//(w2.shape[0], )
-        //    self.w_dense0 = new Var(shape: w0.shape, init: w0);
-        //    self.b_lif1 = new Var(shape: new Shape(w0.shape[0]), init: b1);//(w0.shape[0],)
-        //    self.w_dense1 = new Var(shape: w1.shape, init: w1);
-        //    self.b_lif2 = new Var(shape: new Shape(w1.shape[0]), init: b2);//(w1.shape[0],)
-        //    self.w_dense2 = new Var(shape: w2.shape, init: w2);
-        //    self.b_output_lif = new Var(shape: new Shape(w2.shape[0]), init: b3);//(w2.shape[0],)
-
-        //    //# Up-level currents and voltages of LIF Processes
-        //    //# for resetting (see at the end of the tutorial)
-        //    //            self.lif1_u = Var(shape = (w0.shape[0],), init = 0)
-        //    //            self.lif1_v = Var(shape = (w0.shape[0],), init = 0)
-        //    //            self.lif2_u = Var(shape = (w1.shape[0],), init = 0)
-        //    //            self.lif2_v = Var(shape = (w1.shape[0],), init = 0)
-        //    //            self.oplif_u = Var(shape = (w2.shape[0],), init = 0)
-        //    //            self.oplif_v = Var(shape = (w2.shape[0],), init = 0)
-
-        //    return self;
-        //}
         public static void Info(GraphProto graph, TextWriter writer)
         {
             theNeuronArray = new NeuronArray();
@@ -75,45 +36,6 @@ namespace BrainSimulator
             int threads = theNeuronArray.GetThreadCount();
             theNeuronArray.SetThreadCount(16);
             threads = theNeuronArray.GetThreadCount();
-
-            theNeuronArray.SetNeuronCurrentCharge(1, 1.4f);
-            theNeuronArray.SetNeuronCurrentCharge(2, 0.9f);
-            theNeuronArray.Fire(); //should transfer current chargest to last
-            float a = theNeuronArray.GetNeuronLastCharge(1);
-            float b = theNeuronArray.GetNeuronLastCharge(2);
-
-            string s0 = theNeuronArray.GetNeuronLabel(1);
-            theNeuronArray.SetNeuronLabel(1, "Fred");
-            string s1 = theNeuronArray.GetNeuronLabel(1);
-            theNeuronArray.SetNeuronLabel(1, "George");
-            string s2 = theNeuronArray.GetNeuronLabel(1);
-
-            theNeuronArray.AddSynapse(2, 4, .75f, 1, false);
-            List<Synapse> synapses2 = theNeuronArray.GetSynapsesList(2);
-            theNeuronArray.AddSynapse(1, 2, .5f, 0, false);
-            List<Synapse> synapses1 = theNeuronArray.GetSynapsesList(1);
-            theNeuronArray.AddSynapse(1, 3, .6f, 0, false);
-            synapses1 = theNeuronArray.GetSynapsesList(1);
-            theNeuronArray.AddSynapse(1, 4, .75f, 1, false);
-            synapses1 = theNeuronArray.GetSynapsesList(1);
-            theNeuronArray.AddSynapse(2, 4, .75f, 1, false);
-            long count = theNeuronArray.GetTotalSynapses();
-            List<Synapse> synapses0 = theNeuronArray.GetSynapsesList(0);
-            synapses1 = theNeuronArray.GetSynapsesList(1);
-            List<Synapse> synapsesFrom = theNeuronArray.GetSynapsesFromList(4);
-
-            NeuronPartial n = theNeuronArray.GetPartialNeuron(1);
-            theNeuronArray.Fire();
-            long gen = theNeuronArray.GetGeneration();
-            NeuronPartial n1 = theNeuronArray.GetPartialNeuron(1);
-            NeuronPartial n2 = theNeuronArray.GetPartialNeuron(2);
-            NeuronPartial n3 = theNeuronArray.GetPartialNeuron(3);
-            theNeuronArray.DeleteSynapse(1, 3);
-            theNeuronArray.DeleteSynapse(1, 2);
-
-
-
-
 
             HashSet<string> initializerNameSet = new HashSet<string>(graph.Initializer.Select((TensorProto i) => i.Name));
             int nID = 0;
@@ -140,11 +62,6 @@ namespace BrainSimulator
             graph.Initializer.Format(writer);
             var dim = graph.Initializer.OrderBy(d => d.FloatData.Count).Last();
             var max = dim.FloatData.Max();
-            //foreach(var dim in graph.Initializer)
-            //{
-                //MessageBox.Show("allocating synapses");
-                //Parallel.For(0, neuronCount, x =>
-                //{
             for (int x = 0; x < neuronCount; x++)
             {
                 for (int j = 0; j < synapsesPerNeuron; j++)
@@ -152,12 +69,10 @@ namespace BrainSimulator
                     int target = x + j;
                     if (target >= theNeuronArray.GetArraySize()) target -= theNeuronArray.GetArraySize();
                     if (target < 0) target += theNeuronArray.GetArraySize();
-                    //theNeuronArray.AddSynapse(x, target, 1.0f, 0, true);
                     if (j >= dim.FloatData.Count) break;
                     theNeuronArray.AddSynapse(x, target, dim.FloatData[j] / max, 0, true);
                 }
             }
-            //});
             var rand = new Random();
             for (int i = 0; i < neuronCount; i++) 
             {
@@ -171,12 +86,8 @@ namespace BrainSimulator
                     if (syn.Weight == 0.0) syn.Weight = dim.FloatData[i + neuronCount] / max;
                     syn.TargetNeuron = (int)(100.0 * rand.NextDouble());
                 }
-                //theNeuronArray.SetNeuronCurrentCharge(100 * i, 1);
                 theNeuronArray.SetCompleteNeuron(neu);
             }
-            //MessageBox.Show("synapses and charge complete");
-            //}
-            //theNeuronArray.Initialize(arraySize, theNeuronArray.rows);
             theNeuronArray.LoadComplete = true;
             var rowsVal = theNeuronArray.rows;
             var notReady = IsArrayEmpty();
@@ -218,11 +129,6 @@ namespace BrainSimulator
             var file = new FileInfo(fileName);
             if(file.Extension.ToLower().Contains("onnx"))
             {
-
-                //var myData = np.load(file.FullName,allow_pickle: true);//.Replace("\\", "/")
-                //var table = GetMNistPretrained(myData);
-
-
                 // Examples see https://github.com/onnx/models
                 var onnxInputFilePath = file.FullName;
 
@@ -230,9 +136,9 @@ namespace BrainSimulator
 
                 var graph = model.Graph;
                 // Clean graph e.g. remove initializers from inputs that may prevent constant folding
-                graph.Clean();
-                // Set dimension in graph to enable dynamic batch size during inference
-                graph.SetDim(dimIndex: 0, DimParamOrValue.New("N"));
+                //graph.Clean();
+                //// Set dimension in graph to enable dynamic batch size during inference
+                //graph.SetDim(dimIndex: 0, DimParamOrValue.New("N"));
                 // Get summarized info about the graph
                 var info = graph.Info();
 
