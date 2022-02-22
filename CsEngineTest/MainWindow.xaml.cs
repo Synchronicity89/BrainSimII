@@ -18,10 +18,17 @@ namespace CsEngineTest
             InitializeComponent();
         }
 
-        static NeuronHandler theNeuronArray = null;
-        private void Button_Click(object sender, RoutedEventArgs e)
+        //Split functionality for generating a network and running tests into two separate functions
+        //Allow user create a new Xml file when saving XML(can only overwrite existing at present)
+        //Run tests after loading a Xml file.As of now it only tests the creation of the network from the loaded file.
+        //Allow the GUI user to change the number of neurons, synapses etc prior to generating a network.
+        //Show the number of neurons and synapses etc after loading a Xml, but limit how much the user can change them.
+
+        public static NeuronHandler theNeuronArray = null;
+        private void Initialize_Click(object sender, RoutedEventArgs e)
         {
-            int neuronCount = 1000000;
+            //int neuronCount = 1000000;
+            int neuronCount = 1000;
             int synapsesPerNeuron = 1000;
             MessageBox.Show("Starting array allocation");
             theNeuronArray = new NeuronHandler();
@@ -68,7 +75,6 @@ namespace CsEngineTest
             theNeuronArray.DeleteSynapse(1, 3);
             theNeuronArray.DeleteSynapse(1, 2);
 
-
             MessageBox.Show("allocating synapses");
             Parallel.For(0, neuronCount, x =>
             {
@@ -85,6 +91,11 @@ namespace CsEngineTest
             for (int i = 0; i < neuronCount / 100; i++)
                 theNeuronArray.SetNeuronCurrentCharge(100 * i, 1);
             MessageBox.Show("synapses and charge complete");
+            FireNeurons();
+        }
+
+        private void FireNeurons()
+        {
             Stopwatch sw = new Stopwatch();
             string msg = "";
             for (int i = 0; i < 10; i++)
@@ -98,40 +109,43 @@ namespace CsEngineTest
             sw.Stop();
             MessageBox.Show("Done firing 10x\n" + msg);
         }
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+
+        private void ReadXml_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog
+            OpenFileDialog openFileDialog = new OpenFileDialog
             {
                 Filter = "XML Network Files|*.xml",
                 Title = "Select a Brain Simulator File"
             };
             // Show the Dialog.  
             // If the user clicked OK in the dialog and  
-            Nullable<bool> result = openFileDialog1.ShowDialog();
+            Nullable<bool> result = openFileDialog.ShowDialog();
             if (result ?? false)
             {
-                string currentFileName = openFileDialog1.FileName;
+                theNeuronArray = null;
+                string currentFileName = openFileDialog.FileName;
                 bool loadSuccessful = XmlFile.Load(ref theNeuronArray, currentFileName);
                 if (!loadSuccessful)
                 {
                     currentFileName = "";
                 }
             }
+            FireNeurons();
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void WriteXml_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog
+            SaveFileDialog saveFileDialog = new SaveFileDialog
             {
                 Filter = "XML Network Files|*.xml",
-                Title = "Select a Brain Simulator File"
+                Title = "Save a Brain Simulator File"
             };
             // Show the Dialog.  
             // If the user clicked OK in the dialog and  
-            Nullable<bool> result = openFileDialog1.ShowDialog();
+            Nullable<bool> result = saveFileDialog.ShowDialog();
             if (result ?? false)
             {
-                string currentFileName = openFileDialog1.FileName;
+                string currentFileName = saveFileDialog.FileName;
                 bool loadSuccessful = XmlFile.Save(ref theNeuronArray, currentFileName);
                 if (!loadSuccessful)
                 {

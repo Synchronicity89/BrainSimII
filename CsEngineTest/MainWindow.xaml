@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid Margin="0,0,166,105">
-        <Button Content="Initialize" HorizontalAlignment="Left" Height="67" Margin="50,85,0,0" VerticalAlignment="Top" Width="174" Click="Button_Click"/>
-        <Button Content="Read XML" HorizontalAlignment="Left" Height="51" Margin="67,177,0,0" VerticalAlignment="Top" Width="116" Click="Button_Click_1"/>
-        <Button Content="Write XML" HorizontalAlignment="Left" Height="50" Margin="67,254,0,0" VerticalAlignment="Top" Width="116" Click="Button_Click_2"/>
+        <Button Content="Initialize" HorizontalAlignment="Left" Height="67" Margin="50,85,0,0" VerticalAlignment="Top" Width="174" Click="Initialize_Click"/>
+        <Button Content="Read XML" HorizontalAlignment="Left" Height="51" Margin="67,177,0,0" VerticalAlignment="Top" Width="116" Click="ReadXml_Click"/>
+        <Button Content="Write XML" HorizontalAlignment="Left" Height="50" Margin="67,254,0,0" VerticalAlignment="Top" Width="116" Click="WriteXml_Click"/>
 
     </Grid>
 </Window>
