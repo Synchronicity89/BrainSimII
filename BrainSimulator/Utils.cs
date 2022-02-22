@@ -240,7 +240,7 @@ namespace BrainSimulator
             return c;
         }
 
-        static double RGBChannelFromHue(double m1, double m2, double h)
+        public static double RGBChannelFromHue(double m1, double m2, double h)
         {
             h = (h + 1d) % 1d;
             if (h < 0) h += 1;

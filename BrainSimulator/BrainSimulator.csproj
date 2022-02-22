@@ -296,6 +296,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NeuronEngineWrapper\NeuronEngineWrapper.vcxproj" />
+    <ProjectReference Include="..\OnnxSharpWhitebox\src\OnnxSharp\OnnxSharp.csproj" />
   </ItemGroup>
 
   <ItemGroup>

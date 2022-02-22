@@ -204,7 +204,8 @@ namespace BrainSimulator
             {
                 OpenFileDialog openFileDialog1 = new OpenFileDialog
                 {
-                    Filter = "XML Network Files|*.xml",
+                    //\"Image files (*.bmp, *.jpg)|*.bmp;*.jpg|All files (*.*)|*.*\"'
+                    Filter = "XML Network Files (*.xml)|*.xml|ONNX Files (*.onnx)|*.onnx",
                     Title = "Select a Brain Simulator File",
                 };
                 // Show the Dialog.  

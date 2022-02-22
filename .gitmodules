@@ -1,0 +1,3 @@
+[submodule "OnnxSharpWhitebox"]
+	path = OnnxSharpWhitebox
+	url = https://github.com/Synchronicity89/OnnxSharp.git
