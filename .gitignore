@@ -277,3 +277,4 @@ AutomatedTests/*.png
 /test_data_set_0
 /test_data_set_1
 /test_data_set_2
+*.onnx
