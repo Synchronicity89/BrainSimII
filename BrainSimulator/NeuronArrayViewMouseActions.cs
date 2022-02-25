@@ -255,8 +255,8 @@ namespace BrainSimulator
             //build the draggable selection rectangle
             dragRectangle = new Rectangle();
             dragRectangle.Width = dragRectangle.Height = dp.NeuronDisplaySize;
-            dragRectangle.Stroke = BrushCache.Instance.Get(Colors.Red);
-            dragRectangle.Fill = BrushCache.Instance.Get(Colors.Red);
+            dragRectangle.Stroke = new SolidColorBrush(Colors.Red);
+            dragRectangle.Fill = new SolidColorBrush(Colors.Red);
             dragRectangle.Fill.Opacity = 0.5;
             Canvas.SetLeft(dragRectangle, currentPosition.X);
             Canvas.SetTop(dragRectangle, currentPosition.Y);

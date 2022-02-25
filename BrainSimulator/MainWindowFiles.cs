@@ -25,13 +25,20 @@ namespace BrainSimulator
         public static void Info(GraphProto graph, TextWriter writer)
         {
             theNeuronArray = new NeuronArray();
-            int neuronCount = 100;
-            int synapsesPerNeuron = 10;
-            //MessageBox.Show("Starting array allocation");
-            //theNeuronArray = new NeuronHandler();
-            //MessageBox.Show("any existing array removed");
-            theNeuronArray.Initialize(neuronCount, 10);
-            //MessageBox.Show("array allocation complete");
+            var dim = graph.Initializer.OrderBy(d => d.FloatData.Count).Last();
+            var max = dim.FloatData.Max();
+            var maxDim = dim.Dims.Max();
+            long size = dim.Dims[0];
+            for(int i = 1; i < dim.Dims.Count; i++)
+            {
+                size *= dim.Dims[i];
+            }
+
+            List<float> weights = graph.Initializer.OrderByDescending(d => d.FloatData.Count).SelectMany(gi => gi.FloatData).ToList();    
+
+            int neuronCount = (int)size;
+            int synapsesPerNeuron = (int)maxDim;
+            theNeuronArray.Initialize(neuronCount, synapsesPerNeuron);
             int test = theNeuronArray.GetArraySize();
             int threads = theNeuronArray.GetThreadCount();
             theNeuronArray.SetThreadCount(16);
@@ -60,32 +67,30 @@ namespace BrainSimulator
             writer.WriteLine();
             writer.WriteLine("## Initializers (Parameters etc.)");
             graph.Initializer.Format(writer);
-            var dim = graph.Initializer.OrderBy(d => d.FloatData.Count).Last();
-            var max = dim.FloatData.Max();
+            var rand = new Random();
             for (int x = 0; x < neuronCount; x++)
             {
                 for (int j = 0; j < synapsesPerNeuron; j++)
                 {
-                    int target = x + j;
-                    if (target >= theNeuronArray.GetArraySize()) target -= theNeuronArray.GetArraySize();
-                    if (target < 0) target += theNeuronArray.GetArraySize();
-                    if (j >= dim.FloatData.Count) break;
-                    theNeuronArray.AddSynapse(x, target, dim.FloatData[j] / max, 0, true);
+                    //int target = x + j;
+                    //if (target >= theNeuronArray.GetArraySize()) target -= theNeuronArray.GetArraySize();
+                    //if (target < 0) target += theNeuronArray.GetArraySize();
+                    if (j >= weights.Count) break;
+                    theNeuronArray.AddSynapse(x, (int)(neuronCount * rand.NextDouble()), weights[j] / max, 0, true);
                 }
             }
-            var rand = new Random();
             for (int i = 0; i < neuronCount; i++) 
             {
                 var neu = theNeuronArray.GetNeuron(i);
                 neu.Owner = theNeuronArray;
                 neu.Model = Neuron.modelType.LIF;
-                neu.LastCharge = dim.FloatData[i] / max;
+                neu.LastCharge = weights[i] / max;
                 neu.ShowSynapses = true;
-                foreach(var syn in neu.Synapses)
-                {
-                    if (syn.Weight == 0.0) syn.Weight = dim.FloatData[i + neuronCount] / max;
-                    syn.TargetNeuron = (int)(100.0 * rand.NextDouble());
-                }
+                //foreach(var syn in neu.Synapses)
+                //{
+                //    if (syn.Weight == 0.0) syn.Weight = weights[i + neuronCount] / max;
+                //    syn.TargetNeuron = (int)(neuronCount * rand.NextDouble());
+                //}
                 theNeuronArray.SetCompleteNeuron(neu);
             }
             theNeuronArray.LoadComplete = true;
