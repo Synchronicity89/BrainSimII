@@ -177,7 +177,7 @@ namespace BrainSimulator
                 l.Stroke = BrushCache.Instance.Get(Utils.RainbowColorFromValue(LastSynapseWeight));
                 if (!(l is Ellipse))
                     l.Fill = l.Stroke;
-                theCanvas.Children.Add(l);
+                theCanvas.Children.AddFrozen(l);
                 synapseShape = l;
             }
         }
@@ -256,11 +256,11 @@ namespace BrainSimulator
             dragRectangle = new Rectangle();
             dragRectangle.Width = dragRectangle.Height = dp.NeuronDisplaySize;
             dragRectangle.Stroke = BrushCache.Instance.Get(Colors.Red);
-            dragRectangle.Fill = BrushCache.Instance.Get(Colors.Red);
-            dragRectangle.Fill.Opacity = 0.5;
+            dragRectangle.Fill = BrushCache.Instance.Get(Colors.Red, 0.5);
+            //dragRectangle.Fill.Opacity = 0.5;
             Canvas.SetLeft(dragRectangle, currentPosition.X);
             Canvas.SetTop(dragRectangle, currentPosition.Y);
-            theCanvas.Children.Add(dragRectangle);
+            theCanvas.Children.AddFrozen(dragRectangle);
             firstSelectedNeuron = mouseDownNeuronIndex;
             lastSelectedNeuron = mouseDownNeuronIndex;
             Mouse.Capture(theCanvas);
@@ -286,7 +286,7 @@ namespace BrainSimulator
             Canvas.SetLeft(dragRectangle, p1.X);
             Canvas.SetTop(dragRectangle, p1.Y);
             if (!theCanvas.Children.Contains(dragRectangle))
-                theCanvas.Children.Add(dragRectangle);
+                theCanvas.Children.AddFrozen(dragRectangle);
         }
         private void FinishSelection()
         {

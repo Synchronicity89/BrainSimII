@@ -15,6 +15,7 @@ using System.Windows.Input;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections.Concurrent;
+using System.Windows.Shapes;
 
 namespace BrainSimulator
 {
@@ -71,6 +72,16 @@ namespace BrainSimulator
         }
     }
 
+    public static class UIElementCollectionExtensions
+    {
+        public static int AddFrozen(this UIElementCollection thisCollection, UIElement uiElement)
+        {
+            Utils.TryFreeze(uiElement);
+            return thisCollection.Add((UIElement)uiElement);
+        }
+    }
+
+
     /// <summary>
     /// Generic cache
     /// </summary>
@@ -82,14 +93,14 @@ namespace BrainSimulator
         protected ConcurrentDictionary<TIn, TOut> _cache = new ConcurrentDictionary<TIn, TOut>();
         public TOut GetOrCreate(TIn input, Func<TIn, TOut> create)
         {
-            if(_cache.ContainsKey(input))
+            if (_cache.ContainsKey(input))
             {
                 return _cache[input];
             }
             else
             {
                 TOut output = create(input);
-                if(output.CanFreeze)
+                if (output.CanFreeze)
                 {
                     output.Freeze();
                 }
@@ -101,7 +112,7 @@ namespace BrainSimulator
     /// <summary>
     /// A cache of SolidColorBrush. It freezes brushes to speed up graphics performance, plus caches instances.
     /// </summary>
-    public class BrushCache : FreezableCache<Color, SolidColorBrush>
+    public class BrushCache : FreezableCache<ValueTuple<Color, double>, SolidColorBrush>
     {
         Color[] colors;
         public static BrushCache Instance = new();
@@ -122,6 +133,49 @@ namespace BrainSimulator
                 Colors.Red,
                 Colors.LightBlue,
                 Colors.Wheat,
+                Colors.Lime,
+                Colors.DimGray,
+                Colors.Fuchsia,
+                Colors.Aqua,
+                Colors.Purple,
+                Colors.Maroon,
+                Colors.Green,
+                Colors.Crimson,
+                Colors.BlanchedAlmond,
+                Colors.BlueViolet,
+                Colors.Brown,
+                Colors.BurlyWood,
+                Colors.CadetBlue,
+                Colors.Chartreuse,
+                Colors.Chocolate,
+                Colors.Coral,
+                Colors.CornflowerBlue,
+                Colors.DarkBlue,
+                Colors.DarkCyan,
+                Colors.DarkGoldenrod,
+                Colors.DarkGray,
+                Colors.DarkGreen,
+                Colors.DarkKhaki,
+                Colors.DarkMagenta,
+                Colors.DarkOliveGreen,
+                Colors.DarkOrange,
+                Colors.DarkOrchid,
+                Colors.DarkRed,
+                Colors.DarkSalmon,
+                Colors.DarkSeaGreen,
+                Colors.DarkSlateBlue,
+                Colors.DarkSlateGray,
+                Colors.DarkTurquoise,
+                Colors.DarkViolet,
+                Colors.DeepPink,
+                Colors.DeepSkyBlue,
+                Colors.DodgerBlue,
+                Colors.Firebrick,
+                Colors.ForestGreen,
+                Colors.Gainsboro,
+                Colors.Gold,
+                Colors.Goldenrod,
+                Colors.Aquamarine,
                 Colors.LightSalmon
             };
 
@@ -132,29 +186,35 @@ namespace BrainSimulator
                 { 
                     newBrush.Freeze();
                 }
-                _cache.GetOrAdd(c, newBrush);
+                _cache.GetOrAdd(new ValueTuple<Color, double>(c, 1.0), newBrush);
             }
         }
 
         /// <summary>
-        /// Fetch known colors without having to call ContainsKey
+        /// Fetch brush for color
         /// </summary>
         /// <param name="color"></param>
         /// <returns>SolidColorBrush</returns>
         public SolidColorBrush Get(Color color)
         {
-            if (colors.Contains(color) == false && _cache.ContainsKey(color) == false)
+            return base.GetOrCreate(new ValueTuple<Color, double>(color, 1.0), (c) =>
             {
-                return GetOrCreate(color, (c) =>
-                {
-                    SolidColorBrush newBrush = new(c);
-                    return newBrush;
-                });
-            }
-            else
-            { 
-                return _cache[color];
-            }
+                return new SolidColorBrush(color);
+            });
+        }
+
+        /// <summary>
+        /// Fetch brush for color and opacity
+        /// </summary>
+        /// <param name="color">color</param>
+        /// <param name="opacity">opacity</param>
+        /// <returns>SolidColorBrush</returns>
+        public SolidColorBrush Get(Color color, double opacity)
+        {
+            return base.GetOrCreate(new ValueTuple<Color, double>(color, opacity), (i) =>
+            {
+                return new SolidColorBrush { Color=color, Opacity=opacity};
+            });
         }
     }
 
@@ -816,7 +876,7 @@ namespace BrainSimulator
                             where typeof(ModuleBase).IsAssignableFrom(assemblyType)
                             orderby assemblyType.Name
                             select assemblyType
-                ).ToArray();
+                );
             List<Type> retVal = new List<Type>();
             foreach (var t in listOfBs)
             {
@@ -826,5 +886,58 @@ namespace BrainSimulator
             return retVal.ToArray();
         }
 
+        public static void TryFreeze(Freezable freezable)
+        {
+            if(freezable != null && freezable.CanFreeze == true)
+            {
+                freezable.Freeze();
+            }
+        }
+
+        public static void TryFreeze(UIElement uiElement)
+        {
+            Utils.TryFreeze(((Shape)uiElement).RenderedGeometry);
+            Utils.TryFreeze(((Shape)uiElement).GeometryTransform);
+            Utils.TryFreeze(((Shape)uiElement).Stroke);
+            Utils.TryFreeze(((Shape)uiElement).StrokeDashArray);
+            Utils.TryFreeze(((Shape)uiElement).LayoutTransform);
+            Utils.TryFreeze(uiElement.RenderTransform);
+            switch (uiElement.GetType().FullName)
+            {
+                case "System.Windows.Shapes.Line":
+                    //intentionally do nothing
+                    break;
+                case "System.Windows.Shapes.Rectangle":
+                case "System.Windows.Shapes.Ellipse":
+                    Utils.TryFreeze(((Shape)uiElement).Fill);
+                    break;
+                case "System.Windows.Shapes.Path":
+                    Utils.TryFreeze(((Path)uiElement).Data);
+                    break;
+                case "System.Windows.Shapes.Polyline":
+                    Utils.TryFreeze(((Polyline)uiElement).Points);
+                    break;
+                case "System.Windows.Shapes.Polygon":
+                    Utils.TryFreeze(((Polygon)uiElement).Points);
+                    Utils.TryFreeze(((Polygon)uiElement).Fill);
+                    break;
+                default:
+                    foreach (var property in uiElement.GetType().GetProperties())
+                    {
+                        if (property.PropertyType.IsSubclassOf(typeof(Freezable)) == true)
+                        {
+                            var obj = property.GetValue(uiElement);
+                            if (obj != null)
+                            {
+                                if (((Freezable)obj).CanFreeze == true && ((Freezable)obj).IsFrozen == false)
+                                {
+                                    ((Freezable)obj).Freeze();
+                                }
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
     }
 }

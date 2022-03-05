@@ -46,19 +46,20 @@ namespace BrainSimulator.Modules
             tg.Children.Add(new RotateTransform(90));
             tg.Children.Add(new ScaleTransform(scale, -scale, 0, 0));
             tg.Children.Add(new TranslateTransform(windowCenter.X, windowCenter.Y));
+            Utils.TryFreeze(tg);
             theCanvas.RenderTransform = tg;
 
 
             //add a background
-            Rectangle r = new Rectangle() { Height = parent.boundarySize * 2, Width = parent.boundarySize * 2, Stroke = Brushes.AliceBlue, Fill = Brushes.AliceBlue };
+            Rectangle r = new Rectangle() { Height = parent.boundarySize * 2, Width = parent.boundarySize * 2, Stroke = BrushCache.Instance.Get(Colors.AliceBlue), Fill = BrushCache.Instance.Get(Colors.AliceBlue) };
             Canvas.SetLeft(r, -parent.boundarySize);
             Canvas.SetTop(r, -parent.boundarySize);
-            theCanvas.Children.Add(r);
+            theCanvas.Children.AddFrozen(r);
 
             //draw the camera track...
             Polyline p = new Polyline();
             p.StrokeThickness = 1 / scale;
-            p.Stroke = Brushes.Pink;
+            p.Stroke = BrushCache.Instance.Get(Colors.Pink);
             for (int i = 0; i < parent.entityTrack.Count; i++)
             {
                 p.Points.Add(
@@ -68,14 +69,14 @@ namespace BrainSimulator.Modules
                         )
                         );
             }
-            theCanvas.Children.Add(p);
+            theCanvas.Children.AddFrozen(p);
 
             //draw the objects
             for (int i = 0; i < parent.objects.Count; i++)
             {
                 if (parent.objects[i].theColor != Colors.Black && parent.texture != 0)
                 {
-                    theCanvas.Children.Add(new Line
+                    theCanvas.Children.AddFrozen(new Line
                     {
                         X1 = parent.objects[i].P1.X,
                         X2 = parent.objects[i].P2.X,
@@ -94,7 +95,7 @@ namespace BrainSimulator.Modules
                     {
                         PointPlus PStart = new PointPlus((Point)(P1.V + j * delta.V));
                         PointPlus PEnd = new PointPlus((Point)(P1.V + (j + .5f) * delta.V));
-                        theCanvas.Children.Add(new Line
+                        theCanvas.Children.AddFrozen(new Line
                         {
                             X1 = PStart.X,
                             X2 = PEnd.X,
@@ -107,7 +108,7 @@ namespace BrainSimulator.Modules
                 }
                 else
                 {
-                    theCanvas.Children.Add(new Line
+                    theCanvas.Children.AddFrozen(new Line
                     {
                         X1 = parent.objects[i].P1.X,
                         X2 = parent.objects[i].P2.X,
@@ -144,23 +145,23 @@ namespace BrainSimulator.Modules
                         if (i == 0) pa.Theta += a;
                         else pa.Theta -= a;
                         pa.P = (Point)(pa.P + (Vector)parent.entityPosition);
-                        theCanvas.Children.Add(new Line
+                        theCanvas.Children.AddFrozen(new Line
                         {
                             X1 = parent.entityPosition.X,
                             Y1 = parent.entityPosition.Y,
                             X2 = pa.P.X,
                             Y2 = pa.P.Y,
                             StrokeThickness = 2 / scale,
-                            Stroke = Brushes.Black
+                            Stroke = BrushCache.Instance.Get(Colors.Black)
                         });
-                        theCanvas.Children.Add(new Line
+                        theCanvas.Children.AddFrozen(new Line
                         {
                             X1 = pa.P.X,
                             Y1 = pa.P.Y,
                             X2 = parent.armActual[i].X,
                             Y2 = parent.armActual[i].Y,
                             StrokeThickness = 2 / scale,
-                            Stroke = Brushes.Black
+                            Stroke = BrushCache.Instance.Get(Colors.Black)
                         });
                     }
                 }
@@ -174,7 +175,7 @@ namespace BrainSimulator.Modules
                 {
                     try //TODO lock the list
                     {
-                        theCanvas.Children.Add(new Line
+                        theCanvas.Children.AddFrozen(new Line
                         {
                             X1 = parent.currentView0[i].P1.X,
                             Y1 = parent.currentView0[i].P1.Y,
@@ -192,7 +193,7 @@ namespace BrainSimulator.Modules
                 {
                     try //another thread might mess the array up TODO, lock the object list
                     {
-                        theCanvas.Children.Add(new Line
+                        theCanvas.Children.AddFrozen(new Line
                         {
                             X1 = parent.currentView1[i].P1.X,
                             Y1 = parent.currentView1[i].P1.Y,
@@ -217,6 +218,7 @@ namespace BrainSimulator.Modules
             TransformGroup tg1 = new TransformGroup();
             tg1.Children.Add(new TranslateTransform(-parent.bodyRadius, -parent.bodyRadius));
             tg1.Children.Add(new RotateTransform(90 + parent.entityDirection1 * 180 / Math.PI));
+            Utils.TryFreeze(tg1);
             body.RenderTransform = tg1;
             Canvas.SetLeft(body, parent.entityPosition.X);
             Canvas.SetTop(body, parent.entityPosition.Y);

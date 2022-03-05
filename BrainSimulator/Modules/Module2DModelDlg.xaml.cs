@@ -37,26 +37,27 @@ namespace BrainSimulator.Modules
             tg.Children.Add(new RotateTransform(90));
             tg.Children.Add(new ScaleTransform(scale, -scale, 0, 0));// windowCenter.X, windowCenter.Y));
             tg.Children.Add(new TranslateTransform(windowCenter.X, windowCenter.Y));
+            Utils.TryFreeze(tg);
             theCanvas.RenderTransform = tg;
 
             //draw an origin point
-            theCanvas.Children.Add(new Line
+            theCanvas.Children.AddFrozen(new Line
             {
                 X1 = -.20,
                 X2 = .20,
                 Y1 = 0,
                 Y2 = 0,
                 StrokeThickness = 1 / scale,
-                Stroke = Brushes.Black
+                Stroke = BrushCache.Instance.Get(Colors.Black)
             });
-            theCanvas.Children.Add(new Line
+            theCanvas.Children.AddFrozen(new Line
             {
                 X1 = 0,
                 X2 = 0,
                 Y1 = -.20,
                 Y2 = .20,
                 StrokeThickness = 1 / scale,
-                Stroke = Brushes.Black
+                Stroke = BrushCache.Instance.Get(Colors.Black)
             });
 
             //draw possible points;
@@ -66,7 +67,7 @@ namespace BrainSimulator.Modules
                 {
                     if (t.V is PointPlus P1 && !float.IsInfinity(P1.X) && !float.IsInfinity(P1.Y))
                     {
-                        theCanvas.Children.Add(new Line
+                        theCanvas.Children.AddFrozen(new Line
                         {
                             X1 = P1.X,
                             X2 = P1.X,
@@ -95,7 +96,7 @@ namespace BrainSimulator.Modules
                     Point P1P = P1 + (P2 - P1) * segment.P1.Conf / 4;// .2;
                     Point P2P = P1 + (P2 - P1) * (1 - segment.P2.Conf / 4);// .8;
 
-                    theCanvas.Children.Add(new Line
+                    theCanvas.Children.AddFrozen(new Line
                     {
                         X1 = P1.X,
                         X2 = P2.X,
@@ -107,7 +108,7 @@ namespace BrainSimulator.Modules
 
                     if (segment.P1.Conf != 0)
                     {
-                        theCanvas.Children.Add(new Line
+                        theCanvas.Children.AddFrozen(new Line
                         {
                             X1 = P1.X,
                             X2 = P1P.X,
@@ -119,7 +120,7 @@ namespace BrainSimulator.Modules
                     }
                     if (segment.P2.Conf != 0)
                     {
-                        theCanvas.Children.Add(new Line
+                        theCanvas.Children.AddFrozen(new Line
                         {
                             X1 = P2.X,
                             X2 = P2P.X,
@@ -145,7 +146,7 @@ namespace BrainSimulator.Modules
                     Point P1P = P1 + (P2 - P1) * .2;
                     Point P2P = P1 + (P2 - P1) * .8;
 
-                    theCanvas.Children.Add(new Line
+                    theCanvas.Children.AddFrozen(new Line
                     {
                         X1 = P1.X,
                         X2 = P2.X,
@@ -174,7 +175,7 @@ namespace BrainSimulator.Modules
                 };
                 Canvas.SetTop(r, -20);
                 Canvas.SetLeft(r, -20);
-                theCanvas.Children.Add(r);
+                theCanvas.Children.AddFrozen(r);
 
             }
             return true;

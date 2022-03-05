@@ -140,7 +140,7 @@ namespace BrainSimulator
                     Y2 = dp.DisplayOffset.Y + i * dp.NeuronDisplaySize,
                     Stroke = BrushCache.Instance.Get(Colors.Red),
                 };
-                legendCanvas.Children.Add(l);
+                legendCanvas.Children.AddFrozen(l);
             }
             for (int j = 0; j <= columns; j += boxSize)
             {
@@ -152,7 +152,7 @@ namespace BrainSimulator
                     Y2 = dp.DisplayOffset.Y + theNeuronArray.rows * dp.NeuronDisplaySize,
                     Stroke = BrushCache.Instance.Get(Colors.Red),
                 };
-                legendCanvas.Children.Add(l);
+                legendCanvas.Children.AddFrozen(l);
             }
 
             int refNo = 1;
@@ -168,7 +168,7 @@ namespace BrainSimulator
                     if (l.FontSize < 25) l.FontSize = 25;
                     if (l.FontSize > boxSize * dp.NeuronDisplaySize * 0.75)
                         l.FontSize = boxSize * dp.NeuronDisplaySize * 0.75;
-                    l.Foreground = Brushes.White;
+                    l.Foreground = BrushCache.Instance.Get(Colors.White);
                     l.HorizontalAlignment = HorizontalAlignment.Center;
                     l.VerticalAlignment = VerticalAlignment.Center;
                     l.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
@@ -191,7 +191,7 @@ namespace BrainSimulator
                     r.Fill = BrushCache.Instance.Get(Utils.IntToColor(nr.Color));
                     r.SetValue(ShapeType, shapeType.Module);
                     r.SetValue(ModuleView.AreaNumberProperty, i);
-                    theCanvas.Children.Add(r);
+                    theCanvas.Children.AddFrozen(r);
 
                     //Label moduleLabel = new Label();
                     TextBlock moduleLabel = new();
@@ -215,7 +215,7 @@ namespace BrainSimulator
                 r.SetValue(ModuleView.AreaNumberProperty, i);
                 r.SetValue(ShapeType, shapeType.Selection);
 
-                theCanvas.Children.Add(r);
+                theCanvas.Children.AddFrozen(r);
                 ModuleView nr = new ModuleView
                 {
                     Label = "new",
@@ -256,12 +256,12 @@ namespace BrainSimulator
                         img.Source = theSelection.selectedRectangles[i].bitmap;
                         Canvas.SetLeft(img, Canvas.GetLeft(r));
                         Canvas.SetTop(img, Canvas.GetTop(r));
-                        theCanvas.Children.Add(img);
+                        theCanvas.Children.AddFrozen(img);
                         img.SetValue(ModuleView.AreaNumberProperty, -i - 1);
                     }
                 }
             }
-            if (dragRectangle != null) theCanvas.Children.Add(dragRectangle);
+            if (dragRectangle != null) theCanvas.Children.AddFrozen(dragRectangle);
 
 
             //highlight the "target" neuron
@@ -603,7 +603,7 @@ namespace BrainSimulator
                 Canvas.SetLeft(r, p1.X);
                 r.Fill = BrushCache.Instance.Get(Colors.LightBlue);
                 targetNeuronCanvas.Children.Clear();
-                targetNeuronCanvas.Children.Add(r);
+                targetNeuronCanvas.Children.AddFrozen(r);
             }
         }
 

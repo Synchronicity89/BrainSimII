@@ -53,23 +53,23 @@ namespace BrainSimulator.Modules
             if (scale == 0) return false;
 
             //draw an origin point
-            theCanvas.Children.Add(new Line
+            theCanvas.Children.AddFrozen(new Line
             {
                 X1 = -.20,
                 X2 = .20,
                 Y1 = 0,
                 Y2 = 0,
                 StrokeThickness = 1 / scale,
-                Stroke = Brushes.Black
+                Stroke = BrushCache.Instance.Get(Colors.Black)
             });
-            theCanvas.Children.Add(new Line
+            theCanvas.Children.AddFrozen(new Line
             {
                 X1 = 0,
                 X2 = 0,
                 Y1 = -.20,
                 Y2 = .20,
                 StrokeThickness = 1 / scale,
-                Stroke = Brushes.Black
+                Stroke = BrushCache.Instance.Get(Colors.Black)
             });
 
             //draw possible points;
@@ -77,7 +77,7 @@ namespace BrainSimulator.Modules
             {
                 foreach (Point p in parent.favoredPoints)
                 {
-                    theCanvas.Children.Add(new Line
+                    theCanvas.Children.AddFrozen(new Line
                     {
                         X1 = p.X * scale,
                         Y1 = p.Y * scale,
@@ -92,7 +92,7 @@ namespace BrainSimulator.Modules
                 }
                 foreach (ModuleBoundarySegments.Arc t in parent.segments)
                 {
-                    theCanvas.Children.Add(new Line
+                    theCanvas.Children.AddFrozen(new Line
                     {
                         X1 = t.p1.X * scale,
                         X2 = t.p2.X * scale,
