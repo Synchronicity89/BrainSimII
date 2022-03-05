@@ -922,7 +922,7 @@ namespace BrainSimulator
                     Utils.TryFreeze(((Polygon)uiElement).Fill);
                     break;
                 default:
-                    foreach (var property in uiElement.GetType().GetProperties())
+                    foreach (var property in uiElement.GetType().GetProperties().Where(p => (new [] {"RenderedGeometry", "GeometryTransform", "Stroke", "StrokeDashArray", "LayoutTransform", "RenderTransform"}).Contains(p.Name) == false))
                     {
                         if (property.PropertyType.IsSubclassOf(typeof(Freezable)) == true)
                         {
