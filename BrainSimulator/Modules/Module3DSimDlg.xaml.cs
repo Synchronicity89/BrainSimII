@@ -92,10 +92,11 @@ namespace BrainSimulator.Modules
             DirectionalLight myDirectionalLight = new DirectionalLight();
             myDirectionalLight.Color = Colors.White;
             myDirectionalLight.Direction = new Vector3D(-0.61, -0.5, -0.61);
-
+            Utils.TryFreeze(myDirectionalLight);
             myModel3DGroup.Children.Add(myDirectionalLight);
 
             AmbientLight ambient = new AmbientLight(Colors.White);
+            Utils.TryFreeze(ambient);
             myModel3DGroup.Children.Add(ambient);
 
             // Add the geometry model to the model group.
@@ -106,7 +107,7 @@ namespace BrainSimulator.Modules
 
             // Add the group of models to the ModelVisual3d.
             myModelVisual3D.Content = myModel3DGroup;
-
+            Utils.TryFreeze(myModel3DGroup);
             myViewport3D.Children.Add(myModelVisual3D);
 
             // add the viewport to the grid so it will be rendered.
@@ -174,6 +175,7 @@ namespace BrainSimulator.Modules
             //SpecularMaterial myMaterial = new SpecularMaterial(theBrush,50);
             myGeometryModel.Material = myMaterial;
             myGeometryModel.BackMaterial = myMaterial;
+            Utils.TryFreeze(myGeometryModel);
             return myGeometryModel;
         }
     }

@@ -56,11 +56,12 @@ namespace BrainSimulator
             r.Fill = s1;
             if (dp.ShowNeuronOutlines())
             {
-                r.Stroke = Brushes.Black;
+                r.Stroke = BrushCache.Instance.Get(Colors.Black);
                 r.StrokeThickness = 1;
             }
 
             float offset = (1 - ellipseSize) / 2f;
+            Utils.TryFreeze(r);
             Canvas.SetLeft(r, p.X + dp.NeuronDisplaySize * offset);
             Canvas.SetTop(r, p.Y + dp.NeuronDisplaySize * offset);
 
@@ -69,7 +70,7 @@ namespace BrainSimulator
                 tb = new TextBlock();
                 //l.Content = n.Label;
                 tb.FontSize = dp.NeuronDisplaySize * .25;
-                tb.Foreground = Brushes.White;
+                tb.Foreground = BrushCache.Instance.Get(Colors.White);
                 Canvas.SetLeft(tb, p.X + dp.NeuronDisplaySize * offset);
                 Canvas.SetTop(tb, p.Y + dp.NeuronDisplaySize * offset);
                 Canvas.SetZIndex(tb, 100);

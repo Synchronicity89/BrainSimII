@@ -86,13 +86,13 @@ namespace BrainSimulator
                 Canvas.SetTop(s, p1.Y + dp.NeuronDisplaySize / 4);
                 Canvas.SetLeft(s, p1.X + dp.NeuronDisplaySize / 2);
             }
-            s.Stroke = Brushes.Red;
+            s.Stroke = BrushCache.Instance.Get(Colors.Red);
             s.StrokeThickness = 1;
             if (dp.ShowSynapseWideLines())
             {
                 s.StrokeThickness = Math.Min(4, dp.NeuronDisplaySize / 15);
             }
-
+            Utils.TryFreeze(s);
             return s;
         }
 
@@ -145,11 +145,11 @@ namespace BrainSimulator
             lineGroup.Children.Add(connectorGeometry);
 
             System.Windows.Shapes.Path path = new System.Windows.Shapes.Path();
+            Utils.TryFreeze(lineGroup);
             path.Data = lineGroup;
             path.StrokeThickness = 2;
             return path;
         }
-
 
         //these aren't added to synapses (for performance) but are built on the fly if the user right-clicks
         public static void CreateContextMenu(int i, Synapse s, ContextMenu cm)

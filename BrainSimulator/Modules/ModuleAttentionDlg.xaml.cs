@@ -119,13 +119,13 @@ namespace BrainSimulator.Modules
                     poly.Fill = this.Background;
                     if (attnTarget == area)
                     {
-                        poly.Fill = new SolidColorBrush(fillColor);
-                        poly.Stroke = new SolidColorBrush(fillColor);
-                        poly.Fill.Opacity = 1;
+                        poly.Fill = BrushCache.Instance.Get(fillColor, 1.0);
+                        poly.Stroke = BrushCache.Instance.Get(fillColor);
+                        //poly.Fill.Opacity = 1;
                     }
                     poly.MouseDown += Poly_MouseDown;
                     poly.SetValue(AttentionObjectProperty, area);
-                    theCanvas.Children.Add(poly);
+                    theCanvas.Children.AddFrozen(poly);
                 }
             }
 #pragma warning disable 168

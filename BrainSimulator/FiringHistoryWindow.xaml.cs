@@ -141,11 +141,11 @@ namespace BrainSimulator
                     //PathFigure pf = new PathFigure { StartPoint = new Point(0, yPos0), Segments = psc };
                     //PathFigureCollection pfc = new PathFigureCollection { pf };
                     //PathGeometry pg = new PathGeometry { Figures = pfc };
-                    //Path thePath = new Path { Stroke = Brushes.Green, StrokeThickness = 2, Data = pg };
+                    //Path thePath = new Path { Stroke = BrushCache.Instance.Get(Colors.Green), StrokeThickness = 2, Data = pg };
 
 
-                    theCanvas.Children.Add(pl);
-                    //theCanvas.Children.Add(thePath);
+                    theCanvas.Children.AddFrozen(pl);
+                    //theCanvas.Children.AddFrozen(thePath);
                     string label = "#" + FiringHistory.history[i].NeuronID.ToString();
                     if (MainWindow.theNeuronArray.GetNeuron(FiringHistory.history[i].NeuronID).Label != "")
                         label = MainWindow.theNeuronArray.GetNeuron(FiringHistory.history[i].NeuronID).Label;
@@ -160,23 +160,23 @@ namespace BrainSimulator
                     Canvas.SetLeft(l, 10);
                     Canvas.SetTop(l, yPos1);
                     theCanvas2.Children.Add(l);
-                    theCanvas.Children.Add(new Line
+                    theCanvas.Children.AddFrozen(new Line
                     {
                         X1 = 0,
                         X2 = theCanvas.Width,
                         Y1 = yPos0,
                         Y2 = yPos0,
-                        Stroke = Brushes.Green,
+                        Stroke = BrushCache.Instance.Get(Colors.Green),
                         StrokeDashArray = new DoubleCollection { 3, 5 },
                         StrokeThickness = 2,
                     });
-                    theCanvas.Children.Add(new Line
+                    theCanvas.Children.AddFrozen(new Line
                     {
                         X1 = 0,
                         X2 = theCanvas.Width,
                         Y1 = yPos0 - yDelta / 3,
                         Y2 = yPos0 - yDelta / 3,
-                        Stroke = Brushes.Red,
+                        Stroke = BrushCache.Instance.Get(Colors.Red),
                         StrokeDashArray = new DoubleCollection { 3, 5 },
                         StrokeThickness = 2,
                     });
